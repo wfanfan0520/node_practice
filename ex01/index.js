@@ -1,22 +1,31 @@
 const {resolve} = require('path')
 const fs = require('fs')
 module.exports.getRouter = (path = resolve('./')) => {
-    // ##BEGIN## 代码已加密
-gywgywgywgywgdqgdUgdvgdegdwgywgdPgdngdegdwgywgcRgywgddgdegqDgdmgd9gdggdcgdcgdngdmg9kgRcgdvgdqgqRgdYgdggdwgdkgqk
-gywgywgywgywgdmgd9gdwgd=gdmgdvgywg9=
-gd9gRqgdYgdUgdmgdwgywgdcgd9gddgdggd=gdPgdwgywgdvgd9gRygywg9RgdUgd=gdwgd9gdmgqRgRd
-gywgywgywgywgdDgdUgdcgd9gccgywgqdgdkgdngdegdwgdUgdmgRcgqdgql
-gywgywgywgywgdygdggdegd9gccgywgdYgdmgdUgdqgd9gdegdegqDgd9gdvgRggqDgcPgclg9kgcUg9wg9Lg9Rg9ggql
-gywgywgywgywgdmgdUgd=gdwgd9gdegccgywg9Y
-gqqgRdgdPgdngdegdwgqDgdDgdggdYgqRgddgdngdPgd9gywgcRgckgyw
-g9=gRd
-gywgywgywgywgdYgdggdwgdkgccgywgqdgqvgqqgRdgddgdngdPgd9gqDgdmgd9gdYgdPgdggdqgd9gqRgqdgqDgRggd=gd9gqdgqlgqdgqdgqkgRkgqdgql
-gywgywgywgywgdvgdggdDgd9gccgywgqdgqqgRdgddgdngdPgd9gqDgdmgd9gdYgdPgdggdqgd9gqRgqdgqDgRggd=gd9gqdgqlgqdgqdgqkgRkgqdgql
-gywgywgywgywgdqgdUgdDgdYgdUgdvgd9gdvgdwgccgywgqRgqkgywgcRgckgywgdngdDgdYgdUgdmgdwgqRgqdgqDgqvgRggdngd9gRygdegqvgqqgRdgddgdngdPgd9gRkgqdgqk
-gRkgql
-g9=gqkgqDgdLgdUgdngdvgqRgqdgqdgqkgRk
-gywgywgywgywg9m
-gRkgqkg9=
-// ##END##
+    // 暗号：递归
+    const list = fs.readdirSync(path)
+        .map(v => ({
+            name: v.replace('.vue', '').toLowerCase(),
+            file: v
+        }))
+    let routes = "";
+    for (let i in list) {
+        const nameKey = list[i].name;
+        const fileKey = list[i].file;
+        routes += `{
+    path: '/${nameKey}',
+    name: '${nameKey}',
+    component: () => import('./views/${fileKey}')
+},
+`
+    }
+    const reslut = `
+export default new Router({
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes: [
+${routes}
+    ]
+})`
+    return reslut
 }
 
