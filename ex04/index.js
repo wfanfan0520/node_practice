@@ -1,34 +1,29 @@
+// 安装依赖：npm i sequelize mysql2 -S
+// 需求实现：
+  // 初始化：Product, User的表结构
+  // 建立模型之间的关系 belongsTo
+  // 同步表数据
+  // index.spec.js：用mysql的形式配置sequelize
+
 const Sequelize = require('sequelize');
 module.exports.initModel = async sequelize => {
-  // ##BEGIN## 代码已加密
-gywgywg9Lgdegd9gdmgywgcRgywgdegd9gdHgd=gd9gdPgdngR9gd9gqDgdcgd9gddgdngdvgd9gqRgqdgd=gdegd9gdmgqdgqlgywgRd
-gywgywgywgywgdngdcgccgywgRd
-gywgywgywgywgywgywgdwgRcgdYgd9gccgywg9kgd9gdHgd=gd9gdPgdngR9gd9gqDgceg9qg9ngcUgcHgcUg9Rgql
-gywgywgywgywgywgywgdggd=gdwgdUgcegdvgdqgdmgd9gdDgd9gdvgdwgccgywgdwgdmgd=gd9gql
-gywgywgywgywgywgywgdggdPgdPgdUgRyg9qgd=gdPgdPgccgywgddgdggdPgdegd9gql
-gywgywgywgywgywgywgdYgdmgdngdDgdggdmgRcgc=gd9gRcgccgywgdwgdmgd=gd9
-gywgywgywgywgRkgql
-gywgywgywgywgdvgdggdDgd9gccgywg9kgd9gdHgd=gd9gdPgdngR9gd9gqDg9kg9ng9Rgceg9qgcH
-gywgywgRkgqkgc9
+  // 暗号：哈希算法
+  const Product = sequelize.define('product', {
+    title: Sequelize.STRING,
+  });
+  const User = sequelize.define('user', {
+    name: Sequelize.STRING,
+  });
 
-gywgywg99gdmgdUgdcgd=gdqgdwgywgcRgywgdegd9gdHgd=gd9gdPgdngR9gd9gqDgdcgd9gddgdngdvgd9gqRgqdgdYgdmgdUgdcgd=gdqgdwgqdgqlgywgRd
-gywgywgywgywgdngdcgccgywgRd
-gywgywgywgywgywgywgdwgRcgdYgd9gccgywg9kgd9gdHgd=gd9gdPgdngR9gd9gqDgceg9qg9ngcUgcHgcUg9Rgql
-gywgywgywgywgywgywgdggd=gdwgdUgcegdvgdqgdmgd9gdDgd9gdvgdwgccgywgdwgdmgd=gd9gql
-gywgywgywgywgywgywgdggdPgdPgdUgRyg9qgd=gdPgdPgccgywgddgdggdPgdegd9gql
-gywgywgywgywgywgywgdYgdmgdngdDgdggdmgRcgc=gd9gRcgccgywgdwgdmgd=gd9
-gywgywgywgywgRkgql
-gywgywgywgywgdwgdngdwgdPgd9gccgywgRd
-gywgywgywgywgywgywgdwgRcgdYgd9gccgywg9kgd9gdHgd=gd9gdPgdngR9gd9gqDg9kg9ng9Rgceg9qgcHgql
-gywgywgywgywgywgywgdggdPgdPgdUgRyg9qgd=gdPgdPgccgywgddgdggdPgdegd9
-gywgywgywgywgRkgql
-gywgywgRkgqkgc9
-gywgywg99gdmgdUgdcgd=gdqgdwgqDgdygd9gdPgdUgdvgdRgdeg9ngdUgqRg9Lgdegd9gdmgqlgywgRd
-gywgywgywgywgdqgdUgdvgdegdwgdmgdggdngdvgdwgdegccgywgdwgdmgd=gd9gql
-gywgywgywgywgdUgdvgcvgd9gdPgd9gdwgd9gccgywgqdgcDgclg9kgcDgclgcvgcUgqd
-gywgywgRkgqkgc9
-gywgywg9Lgdegd9gdmgqDgdkgdggdeg9ygdggdvgRcgqRg99gdmgdUgdcgd=gdqgdwgqkgc9
-gywgywgdggRygdggdngdwgywgdegd9gdHgd=gd9gdPgdngR9gd9gqDgdegRcgdvgdqgqRgdwgdmgd=gd9gqk
-  // ##END##
-  return { User, Product }
-} 
+  // 建立模型之间的关系
+  Product.belongsTo(User, {
+    constrains: true,   // true：有约束的
+    onDelete: "CASCADE"
+  })
+  User.hasMany(Product)
+
+  // 同步表
+  await sequelize.sync({force: true}) //每次清空数据库
+  
+  return {User,Product}
+}

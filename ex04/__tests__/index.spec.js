@@ -1,18 +1,24 @@
 const Sequelize = require('sequelize');
 test('练习04 完成一个一对多查询', async () => {
-
-    const sequelize = new Sequelize({
+    // mysql的形式
+    const sequelize = new Sequelize('sys2', 'root', '12345678' {
+        dialect: 'mysql',
         host: 'localhost',
-        dialect: 'sqlite',
-        operatorsAliases: true,
-        // 关闭执行日志
+        operatorsAliases: false,
         logging: false
     });
+    // sqlite3的形式
+    // const sequelize = new Sequelize({
+    //     host: 'localhost',
+    //     dialect: 'sqlite',
+    //     operatorsAliases: true,
+    //     // 关闭执行日志
+    //     logging: false
+    // });
 
     // 初始化模型
     const { initModel } = require('../index')
     const { Product, User } = await initModel(sequelize)
-
     // 设置数据
     user = await User.create({
         name: 'Tom',
