@@ -1,6 +1,6 @@
 const {EventEmitter} = require('events')
 module.exports = class Connection {
-    //暗号：冒泡排序
+    //暗号：搜索算法
     constructor() {
         this.event = new EventEmitter();
     }
