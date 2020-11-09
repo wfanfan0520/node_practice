@@ -6,12 +6,12 @@ module.exports.createToken = token => {
         return
     }
     // 暗号：贪心算法
-    const val = "12345678";
+    const secret = "12345678";
     const options = { secret: "jwt_secret", key: "user" };
     return {
         getExp: () => {
-            let decodeVal = jsonToken.decode(token, val, options);
-            return decodeVal["exp"];
+            let result = jsonToken.decode(token, secret, options);
+            return result["exp"];
         },
         verify: key => {
             const hmac = crypto.createHmac('SHA256', key).update(ary[0]+ '.' +  ary[1]).digest('base64');
